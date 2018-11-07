@@ -44,8 +44,8 @@ Plugin 'tobyS/vmustache'
 Plugin 'janko-m/vim-test'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'neomake/neomake'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'maralla/completor.vim'
 
 " Javascript + React
 Plugin 'pangloss/vim-javascript'
@@ -65,31 +65,6 @@ Plugin 'kablamo/vim-git-log'
 Plugin 'gregsexton/gitv'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'jaxbot/github-issues.vim'
-
-" PHP Support
-"Plugin 'phpvim/phpcd.vim'
-Plugin 'tobyS/pdv'
-
-" Erlang Support
-Plugin 'vim-erlang/vim-erlang-tags'
-Plugin 'vim-erlang/vim-erlang-runtime'
-Plugin 'vim-erlang/vim-erlang-omnicomplete'
-Plugin 'vim-erlang/vim-erlang-compiler'
-
-" Elixir Support 
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'avdgaag/vim-phoenix'
-Plugin 'mmorearty/elixir-ctags'
-Plugin 'mattreduce/vim-mix'
-Plugin 'BjRo/vim-extest'
-Plugin 'frost/vim-eh-docs'
-Plugin 'slashmili/alchemist.vim'
-Plugin 'tpope/vim-endwise'
-Plugin 'jadercorrea/elixir_generator.vim'
-Plugin 'mhinz/vim-mix-format'
-
-" Elm Support
-Plugin 'lambdatoast/elm.vim'
 
 " Theme / Interface
 Plugin 'AnsiEsc.vim'
@@ -197,26 +172,12 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_enable_elixir_checker = 1
-" let g:syntastic_elixir_checkers = ["elixir"]
-
-" Neomake settings
-autocmd! BufWritePost * Neomake
-let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
-
-" Vim-PDV Configuration 
-let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 
 " Markdown Syntax Support
 augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
-
-" Vim-Alchemist Configuration
-let g:alchemist#elixir_erlang_src = "/Users/amacgregor/Projects/Github/alchemist-source"
-let g:alchemist_tag_disable = 1
 
 " Vim-Supertab Configuration
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
@@ -288,32 +249,10 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-" Elixir Tagbar Configuration
-let g:tagbar_type_elixir = {
-    \ 'ctagstype' : 'elixir',
-    \ 'kinds' : [
-        \ 'f:functions',
-        \ 'functions:functions',
-        \ 'c:callbacks',
-        \ 'd:delegates',
-        \ 'e:exceptions',
-        \ 'i:implementations',
-        \ 'a:macros',
-        \ 'o:operators',
-        \ 'm:modules',
-        \ 'p:protocols',
-        \ 'r:records',
-        \ 't:tests'
-    \ ]
-    \ }
 
 " Fzf Configuration
 " This is the default extra key bindings
@@ -403,11 +342,6 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-" Vim-PDV Mappings
-autocmd FileType php inoremap <C-p> <ESC>:call pdv#DocumentWithSnip()<CR>i
-autocmd FileType php nnoremap <C-p> :call pdv#DocumentWithSnip()<CR>
-autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
-
 " Disable arrow movement, resize splits instead.
 if get(g:, 'elite_mode')
 	nnoremap <Up>    :resize +2<CR>
@@ -421,6 +355,3 @@ map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
-" Vim-Alchemist Mappings
-autocmd FileType elixir nnoremap <buffer> <leader>h :call alchemist#exdoc()<CR>
-autocmd FileType elixir nnoremap <buffer> <leader>d :call alchemist#exdef()<CR>
